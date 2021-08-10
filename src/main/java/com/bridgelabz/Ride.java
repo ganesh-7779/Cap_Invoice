@@ -13,7 +13,7 @@ public class Ride {
     double time;
 
     //Parameterized constructor
-    public Ride (double distance,double time){
+    public Ride(double distance, double time, InvoiceGenerator.RideMode normal){
         this.distance=distance;
         this.time=time;
     }

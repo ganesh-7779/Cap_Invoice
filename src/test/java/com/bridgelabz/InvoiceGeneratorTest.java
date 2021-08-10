@@ -39,8 +39,8 @@ public class InvoiceGeneratorTest {
     public void givenMultipleRides_ShouldReturnTotalFare() {
         InvoiceGenerator invoice = new InvoiceGenerator();
 
-        Ride[] rides = {new Ride(2.0, 5), new Ride(0.5, 5),
-                new Ride(0.1, 1),};
+        Ride[] rides = {new Ride(2.0, 5, InvoiceGenerator.RideMode.NORMAL), new Ride(0.5, 5, InvoiceGenerator.RideMode.NORMAL),
+                new Ride(0.1, 1, InvoiceGenerator.RideMode.NORMAL),};
         double totalFare = invoice.calculateMultipleFare(rides);
         Assert.assertEquals(40, totalFare, 0.0);
     }
@@ -49,8 +49,8 @@ public class InvoiceGeneratorTest {
     public void given_DistanceAndTime_ForMultipleRides_ShouldReturnEnhanceInvoice() throws EnhanceGeneratorException {
         InvoiceGenerator invoice = new InvoiceGenerator();
 
-        Ride[] rides = {new Ride(2.0, 5), new Ride(0.5, 5),
-                new Ride(0.1, 1),};
+        Ride[] rides = {new Ride(2.0, 5, InvoiceGenerator.RideMode.NORMAL), new Ride(0.5, 5, InvoiceGenerator.RideMode.NORMAL),
+                new Ride(0.1, 1, InvoiceGenerator.RideMode.NORMAL),};
 
         EnhanceInvoice enhanceinvoice = new EnhanceInvoice(3, 40, 13.34);
 
@@ -75,6 +75,21 @@ public class InvoiceGeneratorTest {
             Assert.assertEquals(EnhanceGeneratorException.exception.SERVICE_NULL_EXCEPTION, e.Type);
 
         }
+    }
+    @Test
+    public void givenUserIdAndRides_ShouldReturn_MultipleInvoiceSummary() throws EnhanceGeneratorException {
+        InvoiceGenerator invoice = new InvoiceGenerator();
+        String userId = "abc.com";
 
+        Ride[] rides = { new Ride(2.0, 5, InvoiceGenerator.RideMode.NORMAL),
+                new Ride(0.1, 1, InvoiceGenerator.RideMode.NORMAL) };
+        Ride[] rides1 = { new Ride(2.0, 5, InvoiceGenerator.RideMode.PREMIUM),
+                new Ride(0.1, 1, InvoiceGenerator.RideMode.PREMIUM) };
+        Ride[] rides2 = { new Ride(2.0, 5, InvoiceGenerator.RideMode.NORMAL),
+                new Ride(0.1, 1, InvoiceGenerator.RideMode.PREMIUM) };
+
+        EnhanceInvoice enhanceinvoice = new EnhanceInvoice(3, 40, 13.34);
+        EnhanceInvoice enhancetest = invoice.generateEnhanceInvoice(rides);
+        Assert.assertNotEquals(enhanceinvoice, enhancetest);
     }
 }

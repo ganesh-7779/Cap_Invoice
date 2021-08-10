@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.bridgelabz.InvoiceGeneratorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-08-10T17:50:02" hostname="LAPTOP-EJ5FUF38" time="0.01">
+<testsuite name="com.bridgelabz.InvoiceGeneratorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-08-10T18:56:32" hostname="LAPTOP-EJ5FUF38" time="0.006">
   <properties/>
-  <testcase name="given_DistanceAndTme_ForMulRides_WhenNullReturn_ShouldReturnCustomException" classname="com.bridgelabz.InvoiceGeneratorTest" time="0.01"/>
-  <system-out><![CDATA[Enter User Id
-]]></system-out>
+  <testcase name="givenUserIdAndRides_ShouldReturn_MultipleInvoiceSummary" classname="com.bridgelabz.InvoiceGeneratorTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
