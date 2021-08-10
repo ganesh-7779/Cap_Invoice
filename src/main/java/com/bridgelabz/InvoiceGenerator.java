@@ -19,6 +19,21 @@ public class InvoiceGenerator {
     public Map<String, ArrayList<EnhanceInvoice>> capBook = new HashMap<>();
     public String userId;
 
+    public enum RideMode {
+
+        NORMAL(10.0, 1, 5.0), PREMIUM(15.0, 2, 20.0);
+
+        private double COST_PER_KILO;
+        private int COST_PER_MIN;
+        private double MINIMUM_FARE;
+
+        RideMode(double COST_PER_KILO, int COST_PER_MIN, double MINIMUM_FARE) {
+            this.COST_PER_KILO =COST_PER_KILO;
+            this.COST_PER_MIN = COST_PER_MIN;
+            this.MINIMUM_FARE = MINIMUM_FARE;
+        }
+    }
+
     /**
      * UC1-This method is to calculate the fare of ride with the given time and distance
      * @param distance :first argument of the method
@@ -91,10 +106,23 @@ public class InvoiceGenerator {
             return (HashMap) capBook;
         }
 
+    public EnhanceInvoice InvoiceForRideMode(String userId,Ride[] rideList) throws EnhanceGeneratorException {
+        try {
+            double totalFair = calculateMultipleFare(rideList);
+            int numOfRides = rideList.length;
+            double avgFair = totalFair / numOfRides;
+
+            return new EnhanceInvoice(numOfRides, totalFair, avgFair);
+        } catch (Exception e) {
+            throw new EnhanceGeneratorException(EnhanceGeneratorException.exception.SERVICE_NULL_EXCEPTION);
+
+        }
+
+    }
         public static void main (String[]args) throws EnhanceGeneratorException {
             InvoiceGenerator cap = new InvoiceGenerator();
-            cap.InvoiceSrviceWithUserID(new Ride[]{new Ride(2.0, 5), new Ride(0.5, 5),
-                    new Ride(0.1, 1),});
+            cap.InvoiceSrviceWithUserID(new Ride[]{new Ride(2.0, 5, RideMode.NORMAL), new Ride(0.5, 5, RideMode.NORMAL),
+                    new Ride(0.1, 1, RideMode.NORMAL),});
         }
     }
 
