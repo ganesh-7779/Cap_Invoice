@@ -41,5 +41,8 @@ public class EnhanceInvoice {
     public void setAvgFairPerRide(double avgFairPerRide) {
         this.avgFairPerRide = avgFairPerRide;
     }
+    public String toString() {
+        return "EnhanceInvoice [numberOfRides=" + numberOfRides + ", fair=" + fair + ", avgFairPerRide=" + avgFairPerRide+ "]";
+    }
 
 }
