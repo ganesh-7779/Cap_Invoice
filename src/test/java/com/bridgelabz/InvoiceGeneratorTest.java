@@ -11,6 +11,7 @@ import org.junit.Test;
 
 public class InvoiceGeneratorTest {
 
+    // this teat cae to return fare, distance and time is given
 
     @Test
     public void givenDistanceAndTime_ShouldReturnTotalFare(){
