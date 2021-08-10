@@ -6,10 +6,18 @@
  ***************************************************************************/
 package com.bridgelabz;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
 public class InvoiceGenerator {
     private static final int COST_PER_MIN = 1;
     private static final double MINIMUM_FARE = 5.0;
     private static final double COST_PER_KILO = 10.0;
+    public ArrayList<EnhanceInvoice> userRide = null;
+    public Map<String, ArrayList<EnhanceInvoice>> capBook = new HashMap<>();
+    public String userId;
 
     /**
      * UC1-This method is to calculate the fare of ride with the given time and distance
@@ -25,44 +33,70 @@ public class InvoiceGenerator {
         }
         return totalFare;
     }
+
     /*
      * UC2-This method calculate total fare of all rides
      * @param rides : first argument of the method takes multiple rides in an array form
      * @return calculate total fare
      */
-    public double calculateMultipleFare( Ride [] rides){
+    public double calculateMultipleFare(Ride[] rides) {
         double totalFare = 0;
-        for(Ride ride : rides){
-            totalFare += this.calculateFare(ride.distance,ride.time);
+        for (Ride ride : rides) {
+            totalFare += this.calculateFare(ride.distance, ride.time);
         }
         return totalFare;
     }
 
     /**
      * UC3
+     *
      * @param rideList
-     * @return  To perform average fair per ride
-     *  and total fair with number of rides
+     * @return To perform average fair per ride
+     * and total fair with number of rides
      * @throws EnhanceGeneratorException
      */
 
-    public EnhanceInvoice generateEnhanceInvoice(Ride [] rideList) throws EnhanceGeneratorException {
+    public EnhanceInvoice generateEnhanceInvoice(Ride[] rideList) throws EnhanceGeneratorException {
         try {
-            double totalFair= calculateMultipleFare(rideList) ;
-            int  numOfRides = rideList.length;
-            double avgFair = totalFair/ numOfRides ;
+            double totalFair = calculateMultipleFare(rideList);
+            int numOfRides = rideList.length;
+            double avgFair = totalFair / numOfRides;
 
-            return  new EnhanceInvoice( numOfRides, totalFair, avgFair );
-        }
-        catch(Exception e) {
+            return new EnhanceInvoice(numOfRides, totalFair, avgFair);
+        } catch (Exception e) {
             throw new EnhanceGeneratorException(EnhanceGeneratorException.exception.SERVICE_NULL_EXCEPTION);
 
         }
 
     }
-}
 
+        public HashMap InvoiceSrviceWithUserID (Ride[]rideList) throws EnhanceGeneratorException {
+            try {
+                System.out.println("Enter User Id");
+                Scanner sc = new Scanner(System.in);
+                userId = sc.next();
+                double totalFair = calculateMultipleFare(rideList);
+                int numOfRides = rideList.length;
+                double avgFair = totalFair / numOfRides;
 
+                EnhanceInvoice obj = new EnhanceInvoice(numOfRides, totalFair, avgFair);
+                userRide = new ArrayList<>();
+                userRide.add(obj);
+                capBook.put(userId, userRide);
+                System.out.println(capBook.toString());
+            } catch (Exception e) {
+                throw new EnhanceGeneratorException(EnhanceGeneratorException.exception.SERVICE_NULL_EXCEPTION);
+
+            }
+            return (HashMap) capBook;
+        }
+
+        public static void main (String[]args) throws EnhanceGeneratorException {
+            InvoiceGenerator cap = new InvoiceGenerator();
+            cap.InvoiceSrviceWithUserID(new Ride[]{new Ride(2.0, 5), new Ride(0.5, 5),
+                    new Ride(0.1, 1),});
+        }
+    }
 
 
 
