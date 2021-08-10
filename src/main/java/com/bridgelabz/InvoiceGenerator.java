@@ -25,7 +25,44 @@ public class InvoiceGenerator {
         }
         return totalFare;
     }
+    /*
+     * UC2-This method calculate total fare of all rides
+     * @param rides : first argument of the method takes multiple rides in an array form
+     * @return calculate total fare
+     */
+    public double calculateMultipleFare( Ride [] rides){
+        double totalFare = 0;
+        for(Ride ride : rides){
+            totalFare += this.calculateFare(ride.distance,ride.time);
+        }
+        return totalFare;
+    }
+
+    /**
+     * UC3
+     * @param rideList
+     * @return  To perform average fair per ride
+     *  and total fair with number of rides
+     * @throws EnhanceGeneratorException
+     */
+
+    public EnhanceInvoice generateEnhanceInvoice(Ride [] rideList) throws EnhanceGeneratorException {
+        try {
+            double totalFair= calculateMultipleFare(rideList) ;
+            int  numOfRides = rideList.length;
+            double avgFair = totalFair/ numOfRides ;
+
+            return  new EnhanceInvoice( numOfRides, totalFair, avgFair );
+        }
+        catch(Exception e) {
+            throw new EnhanceGeneratorException(EnhanceGeneratorException.exception.SERVICE_NULL_EXCEPTION);
+
+        }
+
+    }
 }
+
+
 
 
 
